@@ -115,8 +115,6 @@ static DataManager *sharedDataManager = nil;
         [_grid replaceObjectAtIndex:i withObject:@""];
     }
     
-    self.isHeadshotEnable = YES;
-    self.level = 1;
     nbShipSunk = 0;
     
     [self placeShips];
@@ -269,36 +267,36 @@ static DataManager *sharedDataManager = nil;
                               withPositive:isPositive
                                 withLength:length])
             {
-                index = [self getRandomIndex:[[_shipArray objectAtIndex:i] originPoint] withLevel:self.level];
+                index += [self getRandomIndexWithLevel:self.level];
                 
-                length = [[_shipArray objectAtIndex:i] length];
+                length = [tempShip length];
                 randomDir = arc4random() % 2;
                 isSouthDirection = (BOOL)randomDir;
                 randomPositive = arc4random() % 2;
                 isPositive = (BOOL)randomPositive;
                 
             }
-            [[_shipArray objectAtIndex:i] affectShip:isSouthDirection
+            [tempShip affectShip:isSouthDirection
                                         withPositive:isPositive
                                          originPoint:index];
             direction = [self getDirection:isSouthDirection withPositive:isPositive];
             for (int j = 0; j < length; j++)
             {
-                [_grid replaceObjectAtIndex:index withObject:[_shipArray objectAtIndex:i]];
+                [_grid replaceObjectAtIndex:index withObject:tempShip];
                 index += direction;
             }
         }
     }
 }
 
--(NSInteger)getRandomIndex:(NSInteger)_index withLevel:(NSInteger)_levelWanted
+-(NSInteger)getRandomIndexWithLevel:(NSInteger)_levelWanted
 {
     BOOL isVerticalRandom = arc4random() % 2;
     BOOL isPositiveRandom = arc4random() % 2;
     NSInteger randomDistance = arc4random() % _levelWanted+1;
     NSInteger direction = [self getDirection:isVerticalRandom withPositive:isPositiveRandom];
     
-    return _index + (direction * randomDistance);
+    return (direction * randomDistance);
 }
 
 /**
