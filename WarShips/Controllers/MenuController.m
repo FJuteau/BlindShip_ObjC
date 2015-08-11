@@ -10,6 +10,8 @@
 #import "ViewController.h"
 #import "DataManager.h"
 
+#define DEBUG_MODE 1
+
 @interface MenuController () <UIPickerViewDelegate, UIPickerViewDataSource>
 {
     NSArray *pickerData;
@@ -46,6 +48,13 @@
     [self.HeadshotSwitch setEnabled:NO];
     
     [self.LevelPicker setHidden:YES];
+    
+    if (DEBUG_MODE)
+    {
+        [self.labelDebug setHidden:NO];
+        [self.debugSwitch setHidden:NO];
+    }
+    
 }
 
 #pragma mark - Picker methods
@@ -112,6 +121,7 @@
 {
     ViewController *destination = [segue destinationViewController];
     
+    [destination setIsDebugMode:self.debugSwitch.on];
     [destination setSharedDataManager:self.sharedDataManager];
 }
 

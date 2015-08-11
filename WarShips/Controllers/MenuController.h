@@ -16,4 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *visibilitySwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *labelDebug;
+@property (weak, nonatomic) IBOutlet UISwitch *debugSwitch;
+
 @end

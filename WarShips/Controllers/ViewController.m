@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "ShipButton.h"
 
-#define DEBUG_MODE 1
 
 @interface ViewController ()
 {
@@ -214,13 +213,13 @@
          ShipButton *button = [allButtons objectAtIndex:index];
          [button setIsThereAShip:YES];
          
-         if (DEBUG_MODE)
+         if (self.isDebugMode)
          {
              [button setBackgroundColor:[UIColor colorWithRed:1 green:0.93 blue:0 alpha:1]];
              [button setTitle:[[NSString alloc] initWithFormat:@"%ld",[sharedDataManager getShipType:index]] forState:UIControlStateNormal];
          }
      }
-    if (DEBUG_MODE)
+    if (self.isDebugMode)
     {
         NSMutableArray *origineArray = [sharedDataManager getAllOriginePoints];
         for (NSUInteger j = 0; j < [sharedDataManager getNbShipLeft]; j++)

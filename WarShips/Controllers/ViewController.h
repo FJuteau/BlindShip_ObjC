@@ -19,9 +19,10 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *allButtons;
 
-
 @property (weak, nonatomic) IBOutlet UILabel *labelLevel;
 @property (weak, nonatomic) IBOutlet UILabel *labelHeadshot;
+
+@property (nonatomic) BOOL isDebugMode;
 
 - (IBAction)fireOnIndex:(id)sender;
 - (IBAction)newGame;
