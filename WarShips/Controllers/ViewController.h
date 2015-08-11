@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataManager.h"
 
 @interface ViewController : UIViewController <UIAlertViewDelegate>
+
+@property (strong, nonatomic) DataManager *sharedDataManager;
 
 @property (strong, nonatomic) IBOutlet UILabel *labelNbShots;
 @property (strong, nonatomic) IBOutlet UILabel *labelNbPartsOfShipsTouched;
@@ -16,6 +19,9 @@
 
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *allButtons;
 
+
+@property (weak, nonatomic) IBOutlet UILabel *labelLevel;
+@property (weak, nonatomic) IBOutlet UILabel *labelHeadshot;
 
 - (IBAction)fireOnIndex:(id)sender;
 - (IBAction)newGame;

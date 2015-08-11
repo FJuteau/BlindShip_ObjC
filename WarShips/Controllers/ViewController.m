@@ -8,9 +8,8 @@
 
 #import "ViewController.h"
 #import "ShipButton.h"
-#import "DataManager.h"
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 
 @interface ViewController ()
 {
@@ -18,7 +17,6 @@
     int nbPartsOfShipsTouched;   // Nombre de fois qu'un tir a touché un bateau
     int nbShipsSunken;           // Nombre de bateaux coulés
 }
-    @property DataManager *sharedDataManager;
 @end
 
 @implementation ViewController
@@ -30,7 +28,6 @@
     
     if (self)
     {
-        sharedDataManager = [DataManager sharedDataManager];
         nbShots = 0;
         nbPartsOfShipsTouched = 0;
         nbShipsSunken = 0;
@@ -40,11 +37,24 @@
 }
 
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewDidLoad];
 
+    if ([sharedDataManager isHeadshotEnable])
+    {
+        [self.labelHeadshot setText:@"Headshot Enable"];
+    }
+    else
+    {
+        [self.labelHeadshot setText:@"Headshot Disable"];
+    }
+    
+    [self.labelLevel setText:[NSString stringWithFormat:@"Level %ld", [sharedDataManager level]]];
     [self updateLabels];
+    
+    [sharedDataManager reset];
+    
     NSArray *indexesOfShipsPlaces = [sharedDataManager getAllIndexesForAllShips];
     
     [self setButtonsAtIndexes:indexesOfShipsPlaces];
@@ -135,10 +145,13 @@
     // Désactivation du bouton pour que l'utilisateur ne puisse "tirer" 2 fois au même endroit
     [sender setEnabled:NO];
     
-    [sharedDataManager replaceShips];
-    NSArray *indexesOfShipsPlaces = [sharedDataManager getAllIndexesForAllShips];
-    [self resetButtons];
-    [self setButtonsAtIndexes:indexesOfShipsPlaces];
+    if ([sharedDataManager isMoveEnable])
+    {
+        [sharedDataManager replaceShips];
+        NSArray *indexesOfShipsPlaces = [sharedDataManager getAllIndexesForAllShips];
+        [self resetButtons];
+        [self setButtonsAtIndexes:indexesOfShipsPlaces];
+    }
 }
 
 
@@ -216,5 +229,6 @@
         }
     }
 }
+
 
 @end

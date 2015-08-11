@@ -10,7 +10,10 @@
 
 @interface MenuController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UISwitch *HeadshotSwitch;
 
-@property (weak, nonatomic) IBOutlet UISlider *levelSlider;
+@property (weak, nonatomic) IBOutlet UIPickerView *LevelPicker;
+
+@property (weak, nonatomic) IBOutlet UISwitch *visibilitySwitch;
 
 @end

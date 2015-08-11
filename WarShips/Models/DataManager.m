@@ -98,6 +98,9 @@ static DataManager *sharedDataManager = nil;
             [_grid addObject:@""];
         }
         [self reset];
+        self.level = 1;
+        self.isHeadshotEnable = YES;
+        self.isMoveEnable = NO;
     }
     
     return self;
@@ -135,6 +138,7 @@ static DataManager *sharedDataManager = nil;
     Ship *tempShip =[_grid objectAtIndex:_index];
     [tempShip setNbCaseTouch:[tempShip nbCaseTouch]+1];
     
+    NSLog(@"SHIPTOUCH : isHeadShot : %d, level : %ld", self.isHeadshotEnable, self.level);
     if ([tempShip isShipSunk] || ([tempShip isHeadshot:_index] && self.isHeadshotEnable))
     {
         [tempShip setIsSunk:YES];
@@ -495,7 +499,7 @@ static DataManager *sharedDataManager = nil;
     {
         if (![[_shipArray objectAtIndex:i] isSunk])
         {
-            [origineArray addObject:[[NSString alloc] initWithFormat:@"%ld",[[self.shipArray objectAtIndex:i] originPoint]]];
+            [origineArray addObject:[NSString stringWithFormat:@"%ld",[[self.shipArray objectAtIndex:i] originPoint]]];
         }
     }
     return origineArray;
