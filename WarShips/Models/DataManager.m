@@ -138,7 +138,6 @@ static DataManager *sharedDataManager = nil;
     Ship *tempShip =[_grid objectAtIndex:_index];
     [tempShip setNbCaseTouch:[tempShip nbCaseTouch]+1];
     
-    NSLog(@"SHIPTOUCH : isHeadShot : %d, level : %ld", self.isHeadshotEnable, self.level);
     if ([tempShip isShipSunk] || ([tempShip isHeadshot:_index] && self.isHeadshotEnable))
     {
         [tempShip setIsSunk:YES];
@@ -241,7 +240,7 @@ static DataManager *sharedDataManager = nil;
 /**
  *  @author François  Juteau, 15-08-06 02:08:48
  *
- *  @brief  Manage all ships placement
+ *  @brief  Manage all ships replacement
  */
 -(void)replaceShips
 {
@@ -271,7 +270,7 @@ static DataManager *sharedDataManager = nil;
                               withPositive:isPositive
                                 withLength:length])
             {
-                index += [self getRandomIndexWithLevel:self.level];
+                index += [self getRandomIndexWithLevel];
                 
                 length = [tempShip length];
                 randomDir = arc4random() % 2;
@@ -293,11 +292,17 @@ static DataManager *sharedDataManager = nil;
     }
 }
 
--(NSInteger)getRandomIndexWithLevel:(NSInteger)_levelWanted
+/**
+ *  @author François  Juteau, 15-08-11 04:08:14
+ *
+ *  @brief  Get the new index after every random
+ *  @return new index
+ */
+-(NSInteger)getRandomIndexWithLevel
 {
     BOOL isVerticalRandom = arc4random() % 2;
     BOOL isPositiveRandom = arc4random() % 2;
-    NSInteger randomDistance = arc4random() % _levelWanted+1;
+    NSInteger randomDistance = arc4random() % self.level+1;
     NSInteger direction = [self getDirection:isVerticalRandom withPositive:isPositiveRandom];
     
     return (direction * randomDistance);
@@ -492,6 +497,12 @@ static DataManager *sharedDataManager = nil;
     return [tempShip idType];
 }
 
+/**
+ *  @author François  Juteau, 15-08-11 05:08:27
+ *
+ *  @brief  Get the origine point for every ship not sunk
+ *  @return array of origin point
+ */
 -(NSMutableArray *)getAllOriginePoints
 {
     NSMutableArray *origineArray = [[NSMutableArray alloc] init];
@@ -505,6 +516,12 @@ static DataManager *sharedDataManager = nil;
     return origineArray;
 }
 
+/**
+ *  @author François  Juteau, 15-08-11 05:08:09
+ *
+ *  @brief  Get the number of ship not sunk
+ *  @return number of ship not sunk
+ */
 -(NSInteger)getNbShipLeft
 {
     return NBSHIP - nbShipSunk;

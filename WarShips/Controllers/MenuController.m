@@ -73,12 +73,24 @@
 
 #pragma mark - Switch methods
 
-- (IBAction)switchHeadshot:(id)sender
+/**
+ *  @author François  Juteau, 15-08-11 05:08:04
+ *
+ *  @brief  Switch the enability of the headshot feature
+ *  @param UISwitch used
+ */
+- (IBAction)switchHeadshot:(UISwitch *)sender
 {
-    [self.sharedDataManager setIsHeadshotEnable:self.HeadshotSwitch.on];
+    [self.sharedDataManager setIsHeadshotEnable:sender.on];
 }
 
-- (IBAction)shitchVisibility:(UISwitch *)sender
+/**
+ *  @author François  Juteau, 15-08-11 05:08:27
+ *
+ *  @brief  Switch the visibility to on or off state and restrict access to other outlets
+ *  @param sender UISwitch used
+ */
+- (IBAction)switchVisibility:(UISwitch *)sender
 {
     [self.HeadshotSwitch setEnabled:!sender.on];
     [self.HeadshotSwitch setOn:!sender.on animated:YES];
@@ -89,6 +101,13 @@
 
 #pragma mark - Segue methods
 
+/**
+ *  @author François  Juteau, 15-08-11 05:08:35
+ *
+ *  @brief  Prepare to navigate to ViewController
+ *  @param segue  segue to ViewController
+ *  @param sender outlet used to navigate
+ */
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     ViewController *destination = [segue destinationViewController];
@@ -96,6 +115,12 @@
     [destination setSharedDataManager:self.sharedDataManager];
 }
 
+/**
+ *  @author François  Juteau, 15-08-11 05:08:52
+ *
+ *  @brief  Returns from ViewController
+ *  @param sender segue from self to ViewController
+ */
 -(IBAction)exits:(UIStoryboardSegue *)sender
 {
     

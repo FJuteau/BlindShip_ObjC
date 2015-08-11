@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "ShipButton.h"
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE 1
 
 @interface ViewController ()
 {
